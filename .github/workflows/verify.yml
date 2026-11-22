@@ -1,0 +1,16 @@
+name: verify
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Run the same tests as scripts/verify.ps1
+        run: dotnet test NegativeCarver.sln --nologo --verbosity minimal
