@@ -1,0 +1,19 @@
+---
+description: Core 규칙은 Unity 없이 순수 C#으로 두고 시험으로 잠근다
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# C# 경계
+
+`src/NegativeCarver.Core`는 `UnityEngine`을 참조하지 않는다. 프리팹, 입력, 파티클은 이후 `Assets/Scripts` 어댑터만 담당한다.
+
+```csharp
+// 잘못된 예: 판정 안에 파일럿 숫자를 다시 적는다
+if (rowY >= 15) Lose();
+
+// 옳은 예: PilotRules만 본다
+if (rowY >= PilotRules.DefeatHeight) Lose();
+```
+
+공개 API로 그리드를 바꾸고, 호출 안에서 상태와 결과가 어긋나지 않게 한다. 경고는 오류로 취급한다.
